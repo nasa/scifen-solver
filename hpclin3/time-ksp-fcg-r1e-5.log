@@ -1,0 +1,136 @@
+************************************************************************************************************************
+***             WIDEN YOUR WINDOW TO 120 CHARACTERS.  Use 'enscript -r -fCourier9' to print this document            ***
+************************************************************************************************************************
+
+---------------------------------------------- PETSc Performance Summary: ----------------------------------------------
+
+./ksp-solve on a arch-linux2-c-debug named hpclin3 with 1 processor, by dwagner5 Wed Aug 29 09:58:51 2018
+Using Petsc Release Version 3.6.3, Dec, 03, 2015 
+
+                         Max       Max/Min        Avg      Total 
+Time (sec):           1.145e+02      1.00000   1.145e+02
+Objects:              7.700e+01      1.00000   7.700e+01
+Flops:                1.414e+11      1.00000   1.414e+11  1.414e+11
+Flops/sec:            1.235e+09      1.00000   1.235e+09  1.235e+09
+Memory:               4.236e+07      1.00000              4.236e+07
+MPI Messages:         0.000e+00      0.00000   0.000e+00  0.000e+00
+MPI Message Lengths:  0.000e+00      0.00000   0.000e+00  0.000e+00
+MPI Reductions:       0.000e+00      0.00000
+
+Flop counting convention: 1 flop = 1 real number operation of type (multiply/divide/add/subtract)
+                            e.g., VecAXPY() for real vectors of length N --> 2N flops
+                            and VecAXPY() for complex vectors of length N --> 8N flops
+
+Summary of Stages:   ----- Time ------  ----- Flops -----  --- Messages ---  -- Message Lengths --  -- Reductions --
+                        Avg     %Total     Avg     %Total   counts   %Total     Avg         %Total   counts   %Total 
+ 0:      Main Stage: 1.1449e+02 100.0%  1.4138e+11 100.0%  0.000e+00   0.0%  0.000e+00        0.0%  0.000e+00   0.0% 
+
+------------------------------------------------------------------------------------------------------------------------
+See the 'Profiling' chapter of the users' manual for details on interpreting output.
+Phase summary info:
+   Count: number of times phase was executed
+   Time and Flops: Max - maximum over all processors
+                   Ratio - ratio of maximum to minimum over all processors
+   Mess: number of messages sent
+   Avg. len: average message length (bytes)
+   Reduct: number of global reductions
+   Global: entire computation
+   Stage: stages of a computation. Set stages with PetscLogStagePush() and PetscLogStagePop().
+      %T - percent time in this phase         %F - percent flops in this phase
+      %M - percent messages in this phase     %L - percent message lengths in this phase
+      %R - percent reductions in this phase
+   Total Mflop/s: 10e-6 * (sum of flops over all processors)/(max time over all processors)
+------------------------------------------------------------------------------------------------------------------------
+
+
+      ##########################################################
+      #                                                        #
+      #                          WARNING!!!                    #
+      #                                                        #
+      #   This code was compiled with a debugging option,      #
+      #   To get timing results run ./configure                #
+      #   using --with-debugging=no, the performance will      #
+      #   be generally two or three times faster.              #
+      #                                                        #
+      ##########################################################
+
+
+Event                Count      Time (sec)     Flops                             --- Global ---  --- Stage ---   Total
+                   Max Ratio  Max     Ratio   Max  Ratio  Mess   Avg len Reduct  %T %F %M %L %R  %T %F %M %L %R Mflop/s
+------------------------------------------------------------------------------------------------------------------------
+
+--- Event Stage 0: Main Stage
+
+MatMult            21547 1.0 9.3700e+01 1.0 1.08e+11 1.0 0.0e+00 0.0e+00 0.0e+00 82 76  0  0  0  82 76  0  0  0  1148
+MatAssemblyBegin       1 1.0 4.0531e-06 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+MatAssemblyEnd         1 1.0 4.4630e-03 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+MatLoad                1 1.0 1.1789e-01 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+VecTDot            43094 1.0 1.7945e+00 1.0 1.88e+09 1.0 0.0e+00 0.0e+00 0.0e+00  2  1  0  0  0   2  1  0  0  0  1045
+VecMTDot           21546 1.0 5.4893e+00 1.0 1.41e+10 1.0 0.0e+00 0.0e+00 0.0e+00  5 10  0  0  0   5 10  0  0  0  2568
+VecNorm            21548 1.0 5.7011e-01 1.0 9.38e+08 1.0 0.0e+00 0.0e+00 0.0e+00  0  1  0  0  0   0  1  0  0  0  1645
+VecScale           21546 1.0 4.9945e-01 1.0 4.69e+08 1.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0   939
+VecCopy            21548 1.0 3.3384e-01 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+VecSet                73 1.0 3.1374e-03 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+VecAXPY            43094 1.0 1.3701e+00 1.0 1.88e+09 1.0 0.0e+00 0.0e+00 0.0e+00  1  1  0  0  0   1  1  0  0  0  1369
+VecMAXPY           21546 1.0 7.6101e+00 1.0 1.41e+10 1.0 0.0e+00 0.0e+00 0.0e+00  7 10  0  0  0   7 10  0  0  0  1853
+VecAssemblyBegin       1 1.0 3.0994e-06 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+VecAssemblyEnd         1 1.0 2.8610e-06 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+VecPointwiseMult   21548 1.0 1.2755e+00 1.0 4.69e+08 1.0 0.0e+00 0.0e+00 0.0e+00  1  0  0  0  0   1  0  0  0  0   368
+VecLoad                1 1.0 6.7289e-03 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+KSPSetUp               1 1.0 1.5900e-03 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+KSPSolve               1 1.0 1.1418e+02 1.0 1.41e+11 1.0 0.0e+00 0.0e+00 0.0e+00100100  0  0  0 100100  0  0  0  1238
+PCSetUp                1 1.0 4.0531e-06 1.0 0.00e+00 0.0 0.0e+00 0.0e+00 0.0e+00  0  0  0  0  0   0  0  0  0  0     0
+PCApply            21548 1.0 1.4163e+00 1.0 4.69e+08 1.0 0.0e+00 0.0e+00 0.0e+00  1  0  0  0  0   1  0  0  0  0   331
+------------------------------------------------------------------------------------------------------------------------
+
+Memory usage is given in bytes:
+
+Object Type          Creations   Destructions     Memory  Descendants' Mem.
+Reports information only for process 0.
+
+--- Event Stage 0: Main Stage
+
+              Viewer     4              2         1536     0
+              Matrix     1              1     30431632     0
+              Vector    70             70     12295360     0
+       Krylov Solver     1              1         2392     0
+      Preconditioner     1              1          848     0
+========================================================================================================================
+Average time to get PetscTime(): 0
+#PETSc Option Table entries:
+-ksp_converged_reason
+-ksp_norm_type preconditioned
+-ksp_rtol 1e-5
+-ksp_type fcg
+-log_view :hpclin3/time-ksp-fcg-r1e-5.log
+-matload_block_size 3
+-pc_type jacobi
+-rmat system_data_binary/two_hole_nocrack_mat.bin
+-rrhs system_data_binary/two_hole_nocrack_vec.bin
+-v 1
+-vecload_block_size 3
+#End of PETSc Option Table entries
+Compiled without FORTRAN kernels
+Compiled with full precision matrices (default)
+sizeof(short) 2 sizeof(int) 4 sizeof(long) 8 sizeof(void*) 8 sizeof(PetscScalar) 8 sizeof(PetscInt) 4
+Configure options: --prefix=/usr/local/pkgs-modules/petsc_3.6.3
+-----------------------------------------
+Libraries compiled on Thu Feb 11 10:38:32 2016 on casbsrv4 
+Machine characteristics: Linux-2.6.32-504.12.2.el6.centos.plus.x86_64-x86_64-with-centos-6.6-Final
+Using PETSc directory: /misc/local/src/petsc-3.6.3
+Using PETSc arch: arch-linux2-c-debug
+-----------------------------------------
+
+Using C compiler: mpicc  -fPIC -wd1572 -g  ${COPTFLAGS} ${CFLAGS}
+Using Fortran compiler: mpif90  -fPIC -g   ${FOPTFLAGS} ${FFLAGS} 
+-----------------------------------------
+
+Using include paths: -I/misc/local/src/petsc-3.6.3/arch-linux2-c-debug/include -I/misc/local/src/petsc-3.6.3/include -I/misc/local/src/petsc-3.6.3/include -I/misc/local/src/petsc-3.6.3/arch-linux2-c-debug/include -I/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/include
+-----------------------------------------
+
+Using C linker: mpicc
+Using Fortran linker: mpif90
+Using libraries: -Wl,-rpath,/misc/local/src/petsc-3.6.3/arch-linux2-c-debug/lib -L/misc/local/src/petsc-3.6.3/arch-linux2-c-debug/lib -lpetsc -llapack -lblas -lssl -lcrypto -lX11 -Wl,-rpath,/usr/local/pkgs/PBSPro_64/lib -L/usr/local/pkgs/PBSPro_64/lib -Wl,-rpath,/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -L/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -Wl,-rpath,/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -lmpi_f90 -lmpi_f77 -lm -lifport -lifcore -lm -lmpi_cxx -ldl -Wl,-rpath,/usr/local/pkgs/PBSPro_64/lib -L/usr/local/pkgs/PBSPro_64/lib -Wl,-rpath,/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -L/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -lmpi -lrt -lnsl -lutil -lpbs -Wl,-rpath,/usr/local/pkgs/PBSPro_64/lib -L/usr/local/pkgs/PBSPro_64/lib -Wl,-rpath,/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -L/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -Wl,-rpath,/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -Wl,-rpath,/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -limf -lsvml -lirng -lipgo -ldecimal -lcilkrts -lstdc++ -lgcc_s -lirc -lpthread -lirc_s -Wl,-rpath,/usr/local/pkgs/PBSPro_64/lib -L/usr/local/pkgs/PBSPro_64/lib -Wl,-rpath,/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -L/usr/local/pkgs-modules/openmpi_1.6.5_intel_2013_PBS/lib -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -Wl,-rpath,/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/tbb/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/ipp/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -Wl,-rpath,/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -L/usr/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/mkl/lib/intel64 -Wl,-rpath,/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -L/misc/local/pkgs-modules/intel_2013.0.079/composer_xe_2013.4.183/compiler/lib/intel64 -ldl 
+-----------------------------------------
+
+     fcg,  jacobi,1.000000e-05,1.000000e-50,1.000000e+04,1.001385e-21,21765,21547,2

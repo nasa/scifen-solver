@@ -1,0 +1,106 @@
+This mini-app is a simple interface to PETSc Krylov subspace iterative solvers 
+that are suitable for linear-elastic finite element models. The executable 
+simply loads a system matrix, load vector (RHS), and optional reference 
+solution files that were saved in PETSc binary format, then solves it. It is 
+intended for single-core performance comparisons.
+
+Requirements:
+* Linux
+* MPI
+* PETSc (versions 3.6.3 and 3.9.3 tested) 
+* A suitable C compiler such as cc, gcc, or icc.
+
+********************************** IMPORTANT **********************************
+Edit make-local.inc to set PETSC and MPI directories correctly, and to choose 
+a compiler.
+
+In ksp-solve.h, the preprocessor macro PETSC_HACK_POGX is set to "NULL" or 
+to "NULL,NULL", for compatibility with different versions of PETSc.
+*******************************************************************************
+
+Usage:
+The makefile is the easiest way to compile, test, and obtain timings with this 
+mini-app. Timing logs are saved in a directory named after the executing system 
+(hostname). The bash shell script provided, log-parse.sh, is used in the 
+makefile to parse the output from several solutions into a convenient comma-
+delimited (CSV) data file with a similar name.
+
+make exe        : recompile the executable, ksp-solve
+make test-solve : short (100 iteration) test
+make test       : runs several tests
+make time-all   : loops through several tolerances and solvers
+make solve-lu   : solves the system by preconditioning with an LU decomposition
+
+The executable, ksp-solve, requires at least a matrix [k] and vector [p] to
+solve [k][u]=[p] for unknown [u]. The command-line options below are required.
+
+ksp-solve
+ -rmat <input_file> : read matrix file [k]
+ -rrhs <input_file> : read load vector file [p]
+
+The remaining are optional.
+ -v <verbosity>     : default is 1
+ -ruin <input_file> : read initial guess solution file [u]
+ -rref <input_file> : read reference solution file [u]
+ -wsol <output_file>: write solution file [u]
+ -wcsv <output_file>: write data to a CSV file
+
+When -rref is given, the true (not preconditioned) norm of the residual between 
+the computed solution and the provided reference solution will be reported. 
+PETSc options may also be provided to ksp-solve, though only some are used.
+The PETSc options below are applied for the examples in the makefile. See the
+PETSc documentation for more information about these options.
+
+ -ksp_converged_reason            : prints convergence information
+ -ksp_norm_type preconditioned    : use preconditioned residual norm
+ -log_view  :<filename>           : full path to save PETSc log file
+ -ksp_rtol   <relative tolerance> : default is PETSC_DEFAULT
+ -ksp_max_it <max iterations>     : default is size of RHS vector [p]
+ -pc_type    <preconditioner>     : jacobi, lu
+ -ksp_type   <solver>             : (See table)
+
+Suitable FEM System Solvers:
+---------------------------------------------------------------------------
+ <solver>                      Method                        Sym    Unsym  
+---------------------------------------------------------------------------
+    cg                   Conjugate Gradient                   ✓            
+   fcg               Flexible Conjugate Gradient              ✓            
+    cr          (Preconditioned) Conjugate Residuals          ✓            
+                                                                           
+  symmlq                       SYMMLQ                         ✓            
+   cgs               Conjugate Gradient Squared               ✓       ✓    
+   lcd                left conjugate direction                ✓       ✓    
+                                                                           
+   bicg            Biconjugate gradient (Unstable)                         
+   bcgs      BiCGStab (Stabilized BiConjugate Gradient)               ✓    
+  ibcgs             IBiCGStab (Improved BiCGStab)                     ✓    
+  bcgsl            Variant of Enhanced BiCGStab(L)                    ✓    
+                                                                           
+  minres                  Minimum Residual                                 
+  gmres             Generalized Minimal Residual                      ✓    
+  lgmres          Augmented w/ error approximation                    ✓    
+  dgmres                   Deflated GMRES                             ✓    
+                                                                           
+  tfqmr      transpose free QMR (quasi minimal residual)                   
+
+Solve by LU Decomposition
+---------------------------------------------------------------------------
+  preonly                preconditioner only
+
+The following do not support left preconditioning or precoditioned residual 
+norm calculation.
+---------------------------------------------------------------------------
+   cgr      Preconditioned Generalized Conjugate Residual     ✓       ✓    
+  fbcgsr           Equivalent Variant of FBiCGSTab                    ✓    
+  fbcgs                  Flexible BiCGStab                            ✓    
+  fgmres        Flexible Generalized Minimal Residual                 ✓    
+
+
+===============================================================================
+Notices:
+Copyright 2018 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. No copyright is claimed in the United States under Title 17, U.S. Code. All Other Rights Reserved.
+ 
+Disclaimers
+No Warranty: THE SUBJECT SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SUBJECT SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR FREEDOM FROM INFRINGEMENT, ANY WARRANTY THAT THE SUBJECT SOFTWARE WILL BE ERROR FREE, OR ANY WARRANTY THAT DOCUMENTATION, IF PROVIDED, WILL CONFORM TO THE SUBJECT SOFTWARE. THIS AGREEMENT DOES NOT, IN ANY MANNER, CONSTITUTE AN ENDORSEMENT BY GOVERNMENT AGENCY OR ANY PRIOR RECIPIENT OF ANY RESULTS, RESULTING DESIGNS, HARDWARE, SOFTWARE PRODUCTS OR ANY OTHER APPLICATIONS RESULTING FROM USE OF THE SUBJECT SOFTWARE.  FURTHER, GOVERNMENT AGENCY DISCLAIMS ALL WARRANTIES AND LIABILITIES REGARDING THIRD-PARTY SOFTWARE, IF PRESENT IN THE ORIGINAL SOFTWARE, AND DISTRIBUTES IT "AS IS."
+ 
+Waiver and Indemnity:  RECIPIENT AGREES TO WAIVE ANY AND ALL CLAIMS AGAINST THE UNITED STATES GOVERNMENT, ITS CONTRACTORS AND SUBCONTRACTORS, AS WELL AS ANY PRIOR RECIPIENT.  IF RECIPIENT'S USE OF THE SUBJECT SOFTWARE RESULTS IN ANY LIABILITIES, DEMANDS, DAMAGES, EXPENSES OR LOSSES ARISING FROM SUCH USE, INCLUDING ANY DAMAGES FROM PRODUCTS BASED ON, OR RESULTING FROM, RECIPIENT'S USE OF THE SUBJECT SOFTWARE, RECIPIENT SHALL INDEMNIFY AND HOLD HARMLESS THE UNITED STATES GOVERNMENT, ITS CONTRACTORS AND SUBCONTRACTORS, AS WELL AS ANY PRIOR RECIPIENT, TO THE EXTENT PERMITTED BY LAW.  RECIPIENT'S SOLE REMEDY FOR ANY SUCH MATTER SHALL BE THE IMMEDIATE, UNILATERAL TERMINATION OF THIS AGREEMENT.
